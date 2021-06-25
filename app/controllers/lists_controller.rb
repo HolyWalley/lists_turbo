@@ -6,7 +6,7 @@ class ListsController < ApplicationController
   end
 
   def show
-    @list = @current_user.lists.find(params[:id])
+    render :show, locals: { list: list }
   end
 
   def create
@@ -16,13 +16,16 @@ class ListsController < ApplicationController
   end
 
   def update
-    @list = @current_user.lists.find(params[:id])
-    @list.update!(list_params)
+    list.update!(list_params)
 
-    Turbo::StreamsChannel.broadcast_replace_to @list, target: @list, partial: "lists/list", locals: { list: @list }
+    Turbo::StreamsChannel.broadcast_replace_to list, target: list, partial: "lists/list", locals: { list: list }
   end
 
   private
+
+  def list
+    @list ||= @current_user.lists.find(params[:id])
+  end
 
   def list_params
     params.require(:list).permit(:name)

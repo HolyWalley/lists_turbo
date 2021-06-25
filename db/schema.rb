@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2021_06_19_130718) do
 
   create_table "lists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "name"
+    t.string "name", null: false
     t.jsonb "configuration", default: {}, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -26,10 +26,13 @@ ActiveRecord::Schema.define(version: 2021_06_19_130718) do
   end
 
   create_table "lists_items", force: :cascade do |t|
-    t.bigint "list_id", null: false
+    t.string "list_id", null: false
     t.string "value", null: false
+    t.boolean "checked", default: false
+    t.bigint "last_checked_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["last_checked_by_id"], name: "index_lists_items_on_last_checked_by_id"
     t.index ["list_id"], name: "index_lists_items_on_list_id"
   end
 

@@ -27,7 +27,7 @@ gem 'slim-rails'
 gem 'store_model'
 
 gem 'hotwire-rails'
-gem 'simple_form'
+gem 'view_component', '~> 2.34'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

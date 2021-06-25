@@ -14,6 +14,7 @@ class List < ApplicationRecord
   has_many :items, class_name: 'Lists::Item'
 
   # Validations
+  validates :name, presence: true
   validates :configuration, store_model: true
 
   accepts_nested_attributes_for :items

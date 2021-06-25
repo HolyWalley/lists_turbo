@@ -1,3 +1,2 @@
-= turbo_frame_tag dom_id(list) do
-  - form_for list do |f|
-    = f.text_field :name, onfocusout: "this.form.requestSubmit();"
+= turbo_frame_tag dom_id(list), class: "w-full" do
+  = render partial: "lists/form", locals: { list: list }

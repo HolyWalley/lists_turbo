@@ -1,13 +1,13 @@
-= turbo_stream_from @list
-= render partial: 'list', locals: { list: @list }
+.w-1/2.flex.flex-col.items-center.justify-start
+  = turbo_stream_from list
+  = render partial: 'list', locals: { list: list }
 
-br
-= turbo_stream_from "#{ dom_id(@list) }_items" do
-= turbo_frame_tag "#{ dom_id(@list) }_items" do
-  = render @list.items
+  = turbo_stream_from "#{ dom_id(list) }_items" do
+  = turbo_frame_tag "#{ dom_id(list) }_items", class: "w-full flex flex-col" do
+    = render list.items, user: @current_user
 
-= form_for @list.items.new, url: list_items_path(@list) do |f|
-  = f.text_field :value, onkeypress: "createItem(event, this.form);"
+  = form_for list.items.new, url: list_items_path(list), html: { class: "w-full" } do |f|
+    = f.text_field :value, placeholder: "Maybe #{ ["Drinks 🧉", "Cheese 🧀", "Wine 🍷", "Meat 🥩", "Something else..."].sample }", onkeypress: "createItem(event, this.form);", class: "p-5 w-full text-xl text-center outline-none"
 
 javascript:
   function createItem( event, form ) {
