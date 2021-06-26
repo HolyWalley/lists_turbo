@@ -1,0 +1,3 @@
+.ls-item:hover .ls-item__controls, .ls-item:hover .ls-item__votes {
+    display: block;
+}

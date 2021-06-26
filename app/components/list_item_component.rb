@@ -14,6 +14,10 @@ class ListItemComponent < ViewComponent::Base
     crossed? && "line-through"
   end
 
+  def votes
+    @item.votes.group(:sign).count(:sign)
+  end
+
   private
 
   def crossed?

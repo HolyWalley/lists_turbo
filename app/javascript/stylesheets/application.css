@@ -1,3 +1,5 @@
+@import "./components/list-item";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

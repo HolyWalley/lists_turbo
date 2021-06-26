@@ -8,7 +8,7 @@ module Lists
       @item = list.items.create!(item_params)
 
       Turbo::StreamsChannel.broadcast_append_to(
-        "#{ dom_id(@item.list) }_items",
+        @item.list,
         target:  "#{ dom_id(@item.list) }_items",
         partial: "lists/items/item",
         locals:  { item: @item, user: @current_user }
@@ -19,7 +19,7 @@ module Lists
       item.update!(item_params)
 
       Turbo::StreamsChannel.broadcast_replace_to(
-        item,
+        item.list,
         target:  item,
         partial: "lists/items/item",
         locals:  { item: item, user: @current_user }
@@ -29,7 +29,7 @@ module Lists
     def destroy
       item.destroy!
 
-      Turbo::StreamsChannel.broadcast_remove_to(dom_id(item), target: item)
+      Turbo::StreamsChannel.broadcast_remove_to(item.list, target: item)
     end
 
     private

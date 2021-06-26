@@ -1,8 +1,10 @@
-div.flex.flex-row.items-center.w-full
+.ls-item.flex.flex-row.items-center.w-full.relative.p-3
   = form_for @item, url: list_item_path(@item.list, @item) do |f|
     = f.hidden_field :last_checked_by_id, value: @user.id
     = f.check_box :checked, onchange: "this.form.requestSubmit();"
   p class="text-xl #{ item_classes } cursor-pointer w-full"
     = title
-    div.controls
-      = link_to "🗑",list_item_path(@item.list, @item), method: :delete
+  .ls-item__controls.hidden
+    = link_to "🗑",list_item_path(@item.list, @item), method: :delete
+
+  = render partial: "lists/items/votes/votes", locals: { votes: votes, item: @item }

@@ -2,7 +2,6 @@
   = turbo_stream_from list
   = render partial: 'list', locals: { list: list }
 
-  = turbo_stream_from "#{ dom_id(list) }_items" do
   = turbo_frame_tag "#{ dom_id(list) }_items", class: "w-full flex flex-col" do
     = render list.items, user: @current_user
 

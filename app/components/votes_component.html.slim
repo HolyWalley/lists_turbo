@@ -1,0 +1,6 @@
+.flex.flex-row
+  - default.merge(@votes).each do |(sign, count)|
+    = form_for @item.votes.new, url: list_item_votes_path(@item.list, @item) do |f|
+      = f.hidden_field :sign, value: sign
+      .flex.flex-row.mr-1.text-sm.rounded-xl.p-1.hover:bg-blue-400.border-2.border-blue-500.cursor-pointer
+        = f.submit "#{sign} #{count}", class: "bg-transparent w-full cursor-pointer"

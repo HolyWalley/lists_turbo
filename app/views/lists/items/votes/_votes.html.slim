@@ -1,0 +1,2 @@
+= turbo_frame_tag "#{dom_id(item)}_votes", class: "ls-item__votes absolute right-20 -bottom-1 #{ votes.values.sum <= 0 && "hidden" }" do
+  = render VotesComponent.new(votes: votes, item: item)
