@@ -6,6 +6,8 @@ class ListsController < ApplicationController
   end
 
   def show
+    return halt(:forbidden) unless list.can_read?(@current_user)
+
     render :show, locals: { list: list }
   end
 
@@ -24,10 +26,10 @@ class ListsController < ApplicationController
   private
 
   def list
-    @list ||= @current_user.lists.find(params[:id])
+    @list ||= List.find(params[:id])
   end
 
   def list_params
-    params.require(:list).permit(:name)
+    params.require(:list).permit(:name, configuration: [:mode, permissions: [], registered_users_permissions: []])
   end
 end

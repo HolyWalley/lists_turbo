@@ -8,6 +8,31 @@
   = form_for list.items.new, url: list_items_path(list), html: { class: "w-full" } do |f|
     = f.text_field :value, placeholder: "Maybe #{ ["Drinks 🧉", "Cheese 🧀", "Wine 🍷", "Meat 🥩", "Something else..."].sample }", onkeypress: "createItem(event, this.form);", class: "p-5 w-full text-xl text-center outline-none"
 
+.cursor-pointer.flex.mt-20
+  .border-2.-mr-px.border-blue-300.rounded.hover:border-blue-600.w-full.h-full.py-1.px-2.hover:z-10.text-blue-300.hover:text-blue-600 Share
+
+- if list.user == @current_user
+  = form_for list do |f|
+    = f.fields_for :configuration do |ff|
+      .flex
+        label Mode
+        = ff.select :mode, List::Configuration::MODES, { selected: list.configuration.mode }, onchange: "this.form.requestSubmit();"
+      .flex.flex-row
+        .flex.flex-col
+          span Anon users
+          - List::Configuration::PERMISSIONS.each do |name, value|
+            .flex.items-center
+              = ff.check_box :permissions, { multiple: true, checked: list.configuration.permissions[name] }, value, nil
+              label.ml-2 Can #{name}?
+        .flex.flex-col
+          span Registered users
+          - List::Configuration::PERMISSIONS.each do |name, value|
+            .flex.items-center
+              = ff.check_box :registered_users_permissions, { multiple: true, checked: list.configuration.registered_users_permissions[name] }, value, nil
+              label.ml-2 Can #{name}?
+
+.mb-40
+
 javascript:
   function createItem( event, form ) {
     if ( event.charCode === 13 ) {
