@@ -12,8 +12,8 @@
   .border-2.-mr-px.border-blue-300.rounded.hover:border-blue-600.w-full.h-full.py-1.px-2.hover:z-10.text-blue-300.hover:text-blue-600 Share
 
 - if list.user == @current_user
-  = render partial: "configuration", locals: { list: list }
-
+  - content_for :modal do
+    = render partial: "configuration", locals: { list: list }
 .mb-40
 
 javascript:

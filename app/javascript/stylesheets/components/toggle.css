@@ -1,0 +1,17 @@
+.toggle-button > div::before {
+    content: '';
+    height: 86%;
+    width: 43%;
+    margin-top: 2px;
+    margin-left: 4%;
+
+    @apply absolute inset-0 cursor-pointer inline-block bg-white rounded-full shadow transition-all duration-150 ease-in-out;
+}
+
+.toggle-button > input[type="checkbox"]:checked + div {
+    @apply bg-green-500;
+}
+
+.toggle-button > input[type="checkbox"]:checked + div::before {
+    margin-left: 53%;
+}

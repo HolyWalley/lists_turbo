@@ -14,5 +14,10 @@
     <div class="container mx-auto flex flex-col pt-40 items-center min-h-screen">
       <%= yield %>
     </div>
+
+    <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <%= content_for :modal %>
+    </div>
+
   </body>
 </html>

@@ -1,4 +1,5 @@
 @import "./components/list-item";
+@import "./components/toggle";
 
 @tailwind base;
 @tailwind components;

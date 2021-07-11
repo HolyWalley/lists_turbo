@@ -1,0 +1,3 @@
+label.block.toggle-button.relative.rounded-full.w-12.h-6.transition.duration-200.ease-linear.bg-gray-300 for="#{ @field }-toggle"
+  = @f.check_box @field, { **@options, class: "absolute opacity-0", id: "#{ @field }-toggle" }, @checked_value, @unchecked_value
+  .absolute.top-0.left-0.w-full.h-full.rounded-full
