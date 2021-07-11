@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_25_205436) do
+ActiveRecord::Schema.define(version: 2021_07_11_072906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2021_06_25_205436) do
     t.jsonb "configuration", default: {}, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "permissions", default: 0, null: false
+    t.integer "anon_permissions", default: 0, null: false
     t.index ["user_id"], name: "index_lists_on_user_id"
   end
 

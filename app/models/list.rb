@@ -6,6 +6,12 @@ class List < ApplicationRecord
 
     MODES = %i[public private]
 
+    enum :mode, MODES, default: :private
+
+    validates :mode, presence: true
+  end
+
+  class PermissionsBitmap < ActiveModel::Type::Integer
     PERMISSIONS = {
       vote: 0,
       check: 1,
@@ -14,43 +20,35 @@ class List < ApplicationRecord
       remove: 4
     }
 
-    # TODO: try move it outside store model
-    # and add serialize/deserialize methods
-    #
-    class PermissionsBitmap < ActiveModel::Type::Integer
-      def cast(value)
-        return super(value) if value.is_a?(Integer)
+    def cast(value)
+      return super(value) if value.is_a?(Integer)
 
-        if value.is_a?(Hash)
-          super(PERMISSIONS.reduce(0) { |s, (k, v)| value.symbolize_keys[k] ? s |= (1 << v) : s })
-          return
-        end
-
-        super(Types::Bitmask[value])
-      end
+      super(Types::Bitmask[value])
     end
+
+    def deserialize(value)
+      self.class.unpack_permissions(value.to_i)
+    end
+
+    def serialize(value)
+      if value.is_a?(Hash)
+        return PERMISSIONS.reduce(0) { |s, (k, v)| value.symbolize_keys[k] ? s |= (1 << v) : s }
+      end
+
+      value
+    end
+
+    private
 
     def self.unpack_permissions(compacted)
       PERMISSIONS.each_with_object({}) do |(name, value), obj|
         obj[name] = compacted & (1 << value) > 0
       end
     end
-
-    def permissions
-      self.class.unpack_permissions(super)
-    end
-
-    def registered_users_permissions
-      self.class.unpack_permissions(super)
-    end
-
-    enum :mode, MODES, default: :private
-    attribute :permissions, PermissionsBitmap.new
-    attribute :registered_users_permissions, PermissionsBitmap.new
-
-    validates :mode, presence: true
-    validates :permissions, presence: true
   end
+
+  attribute :permissions, PermissionsBitmap.new
+  attribute :anon_permissions, PermissionsBitmap.new
 
   # Store Model Attributes
   attribute :configuration, Configuration.to_type

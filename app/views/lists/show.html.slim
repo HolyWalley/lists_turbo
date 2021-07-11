@@ -12,24 +12,7 @@
   .border-2.-mr-px.border-blue-300.rounded.hover:border-blue-600.w-full.h-full.py-1.px-2.hover:z-10.text-blue-300.hover:text-blue-600 Share
 
 - if list.user == @current_user
-  = form_for list do |f|
-    = f.fields_for :configuration do |ff|
-      .flex
-        label Mode
-        = ff.select :mode, List::Configuration::MODES, { selected: list.configuration.mode }, onchange: "this.form.requestSubmit();"
-      .flex.flex-row
-        .flex.flex-col
-          span Anon users
-          - List::Configuration::PERMISSIONS.each do |name, value|
-            .flex.items-center
-              = ff.check_box :permissions, { multiple: true, checked: list.configuration.permissions[name] }, value, nil
-              label.ml-2 Can #{name}?
-        .flex.flex-col
-          span Registered users
-          - List::Configuration::PERMISSIONS.each do |name, value|
-            .flex.items-center
-              = ff.check_box :registered_users_permissions, { multiple: true, checked: list.configuration.registered_users_permissions[name] }, value, nil
-              label.ml-2 Can #{name}?
+  = render partial: "configuration", locals: { list: list }
 
 .mb-40
 

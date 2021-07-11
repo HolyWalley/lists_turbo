@@ -1,0 +1,4 @@
+div
+  label.inline-flex.items-center
+    = @f.check_box @field, { **@options, class: "form-checkbox text-green-500" }, @checked_value, @unchecked_value
+    span.ml-2= @label

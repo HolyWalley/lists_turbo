@@ -1,0 +1,14 @@
+= form_for list do |f|
+  = f.fields_for :configuration do |ff|
+    .flex
+      label Mode
+      = ff.select :mode, List::Configuration::MODES, { selected: list.configuration.mode }, onchange: "this.form.requestSubmit();"
+  .flex.flex-row
+    .flex.flex-col
+      span Registered users
+      - List::PermissionsBitmap::PERMISSIONS.each do |name, value|
+        = render CheckboxComponent.new(f: f, field: :anon_permissions, checked_value: value, unchecked_value: nil, label: "Can #{ name }?", multiple: true, checked: list.permissions[name])
+    .flex.flex-col
+      span Anon users
+      - List::PermissionsBitmap::PERMISSIONS.each do |name, value|
+        = render CheckboxComponent.new(f: f, field: :anon_permissions, checked_value: value, unchecked_value: nil, label: "Can #{ name }?", multiple: true, checked: list.anon_permissions[name])

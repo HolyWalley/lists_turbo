@@ -30,6 +30,6 @@ class ListsController < ApplicationController
   end
 
   def list_params
-    params.require(:list).permit(:name, configuration: [:mode, permissions: [], registered_users_permissions: []])
+    params.require(:list).permit(:name, configuration: %i[mode], permissions: [], anon_permissions: [])
   end
 end
