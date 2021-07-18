@@ -1,0 +1,7 @@
+= turbo_frame_tag dom_id(invitation) do
+  .flex.flex-row.items-center.my-2
+    = form_for invitation, url: list_invitation_path(invitation.list, invitation), html: { data: { controller: "invitations", action: "submit->invitations#update" } } do |f|
+      = f.text_field :name, class: "w-full p-1 rounded-l border-2 border-gray-100 py-1 px-3", data: { action: "blur->invitations#update" }
+    input.w-full.p-1.rounded-l.border-2.border-gray-100.bg-gray-200.opacity-50.py-1.px-3 type="text" value="#{ invitation.email }" disabled=true
+    = button_to list_invitation_path(list, invitation), method: :delete
+      | X

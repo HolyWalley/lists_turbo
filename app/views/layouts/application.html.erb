@@ -10,12 +10,12 @@
     <%= javascript_pack_tag 'application' %>
   </head>
 
-  <body>
+  <body data-controller="modals" data-modals-shown-value="false">
     <div class="container mx-auto flex flex-col pt-40 items-center min-h-screen">
       <%= yield %>
     </div>
 
-    <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="modal fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <%= content_for :modal %>
     </div>
 

@@ -1,15 +1,15 @@
 .w-1/2.flex.flex-col.items-center.justify-start
   = turbo_stream_from list
-  = render partial: 'list', locals: { list: list }
+  = render list
 
   = turbo_frame_tag "#{ dom_id(list) }_items", class: "w-full flex flex-col" do
-    = render list.items, user: @current_user
+    = render partial: "lists/items/item", collection: list.items, locals: { user: @current_user }
 
   = form_for list.items.new, url: list_items_path(list), html: { class: "w-full" } do |f|
-    = f.text_field :value, placeholder: "Maybe #{ ["Drinks 🧉", "Cheese 🧀", "Wine 🍷", "Meat 🥩", "Something else..."].sample }", onkeypress: "createItem(event, this.form);", class: "p-5 w-full text-xl text-center outline-none"
+    = f.text_field :value, placeholder: "Maybe #{ ["Drinks 🧉", "Cheese 🧀", "Wine 🍷", "Meat 🥩", "Something else..."].sample }", onkeypress: "createItem(event, this.form);", class: "p-5 w-full text-xl text-center border-0 focus:ring-0"
 
 .cursor-pointer.flex.mt-20
-  .border-2.-mr-px.border-blue-300.rounded.hover:border-blue-600.w-full.h-full.py-1.px-2.hover:z-10.text-blue-300.hover:text-blue-600 Share
+  button.border-2.-mr-px.border-blue-300.rounded.hover:border-blue-600.w-full.h-full.py-1.px-2.hover:z-10.text-blue-300.hover:text-blue-600 data-action="click->modals#open" Share
 
 - if list.user == @current_user
   - content_for :modal do
@@ -20,7 +20,7 @@ javascript:
   function createItem( event, form ) {
     if ( event.charCode === 13 ) {
       form.requestSubmit();
-      event.target.value = '';
+      form.reset();
 
       event.preventDefault();
       event.stopPropagation();

@@ -1,6 +1,6 @@
-class CreateListsItemsVotes < ActiveRecord::Migration[6.1]
+class CreateListItemVotes < ActiveRecord::Migration[6.1]
   def change
-    create_table :lists_items_votes do |t|
+    create_table :list_item_votes do |t|
       t.references :list_item
       t.references :voted_by
 

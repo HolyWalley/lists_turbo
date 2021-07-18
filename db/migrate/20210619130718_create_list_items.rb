@@ -1,6 +1,6 @@
-class CreateListsItems < ActiveRecord::Migration[6.1]
+class CreateListItems < ActiveRecord::Migration[6.1]
   def change
-    create_table :lists_items do |t|
+    create_table :list_items do |t|
       t.references :list, null: false, type: :uuid
       t.string :value, null: false
       t.boolean :checked, default: false

@@ -1,5 +1,5 @@
 = form_for list, html: { class: "w-full" } do |f|
-  = f.text_field :name, placeholder: "name it (say #{ ["Summer Party 🍉", "Birthday Party 🎉", "Hen night 🍸"].sample })", onfocusout: list.persisted? ? "this.form.requestSubmit();" : "", class: "p-5 w-full text-center text-2xl outline-none"
+  = f.text_field :name, placeholder: "name it (say #{ ["Summer Party 🍉", "Birthday Party 🎉", "Hen night 🍸"].sample })", onfocusout: list.persisted? ? "this.form.requestSubmit();" : "", class: "border-0 focus:ring-0 w-full p-5 text-center text-2xl"
   - unless list.persisted?
     .w-full.flex.items-center
       = f.submit "Next ⏩", class: "transition-colors hover:bg-green-600 mt-5 mx-auto p-3 rounded bg-green-500 cursor-pointer text-white font-semibold w-48"

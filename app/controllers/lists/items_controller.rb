@@ -43,7 +43,7 @@ module Lists
     end
 
     def item_params
-      params.require(:lists_item).permit(:value, :checked, :last_checked_by_id)
+      params.require(:list_item).permit(:value, :checked, :last_checked_by_id)
     end
   end
 end

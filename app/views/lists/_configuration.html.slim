@@ -1,33 +1,39 @@
-    .flex.items-end.justify-center.min-h-screen.pt-4.px-4.pb-20.text-center.sm:block.sm:p-0
-      .fixed.inset-0.bg-gray-500.bg-opacity-75.transition-opacity aria-hidden="true"
-      span.hidden.sm:inline-block.sm:align-middle.sm:h-screen aria-hidden="true"
-        | &#8203;
-      .inline-block.align-bottom.bg-white.rounded-lg.text-left.overflow-hidden.shadow-xl.transform.transition-all.sm:my-8.sm:align-middle.sm:max-w-lg.sm:w-full
-        = form_for list do |f|
-          .bg-white.px-4.pt-5.pb-4.sm:p-6.sm:pb-4
-            .sm:flex.sm:items-start
-              .mt-3.text-center.sm:mt-0.sm:text-left.w-full
-                h3.flex.flex-row.items-center.justify-between.text-lg.leading-6.font-medium.text-gray-900 id="modal-title"
-                  .flex.items-center.justify-start
-                    .mx-auto.flex-shrink-0.flex.items-center.justify-center.h-12.w-12.rounded-full.bg-indigo-100.sm:mx-0.sm:h-10.sm:w-10
-                      svg.h-6.w-6.text-indigo-600[xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" aria-hidden="true"]
-                        path[stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"]
-                    .flex.flex-col.align-start.ml-3
-                      span.text-gray-700 Make it public
-                      small.text-gray-400.font-light Publish and share the link to anyone.
-                  = f.fields_for :configuration do |ff|
-                    = render ToggleComponent.new(f: ff, field: :mode, checked_value: :public, unchecked_value: :private, onchange: "this.form.requestSubmit();", checked: list.configuration.mode == "public")
-                .mt-2
-                  .flex.items-center.w-full.my-4
-                    input type="text" value="#{ request.url }" class="w-full p-1 rounded-l border-2 border-gray-300"
-                    = link_to "Copy", {}, { class: "flex py-1 px-3 border-2 rounded-r border-gray-300 border-l-0" }
-                  .flex.flex-col
-                    - List::PermissionsBitmap::PERMISSIONS.each do |name, value|
-                      label.flex.justify-between.cursor-pointer.mb-2 for="permission-#{ value }"
-                        span.text-sm Allow #{ name }
-                        = render CheckboxComponent.new(f: f, field: :anon_permissions, checked_value: value, unchecked_value: nil, multiple: true, checked: list.anon_permissions[name], id: "permission-#{ value }")
-          .bg-gray-50.px-4.py-3.sm:px-6.sm:flex.sm:flex-row-reverse
-            button.w-full.inline-flex.justify-center.rounded-md.border.border-transparent.shadow-sm.px-4.py-2.bg-red-600.text-base.font-medium.text-white.hover:bg-red-700.focus:outline-none.focus:ring-2.focus:ring-offset-2.focus:ring-red-500.sm:ml-3.sm:w-auto.sm:text-sm type="button"
-              | Deactivate
-            button.mt-3.w-full.inline-flex.justify-center.rounded-md.border.border-gray-300.shadow-sm.px-4.py-2.bg-white.text-base.font-medium.text-gray-700.hover:bg-gray-50.focus:outline-none.focus:ring-2.focus:ring-offset-2.focus:ring-indigo-500.sm:mt-0.sm:ml-3.sm:w-auto.sm:text-sm type="button"
-              | Cancel
+.flex.items-end.justify-center.min-h-screen.pt-4.px-4.pb-20.text-center.sm:block.sm:p-0
+  .fixed.inset-0.bg-gray-500.bg-opacity-75.transition-opacity aria-hidden="true"
+  span.hidden.sm:inline-block.sm:align-middle.sm:h-screen aria-hidden="true"
+    | &#8203;
+  .inline-block.align-bottom.bg-white.rounded-lg.text-left.overflow-hidden.shadow-xl.transform.transition-all.sm:my-8.sm:align-middle.sm:max-w-lg.sm:w-full
+    .bg-white.px-4.pt-5.pb-4.sm:p-6.sm:pb-4 data-controller="privacy" data-privacy-private-value=list.configuration.private?
+      = form_for list, html: { class: "mb-2", data: { "privacy-target": "form" } } do |f|
+        .sm:flex.sm:items-start
+          .mt-3.text-center.sm:mt-0.sm:text-left.w-full
+            h3.flex.flex-row.items-center.justify-between.text-lg.leading-6.font-medium.text-gray-900 id="modal-title"
+              .flex.items-center.justify-start
+                .mx-auto.flex-shrink-0.flex.items-center.justify-center.h-12.w-12.rounded-full.bg-indigo-100.sm:mx-0.sm:h-10.sm:w-10
+                  svg.h-6.w-6.text-indigo-600[xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" aria-hidden="true"]
+                    path[stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"]
+                .flex.flex-col.align-start.ml-3
+                  span.text-gray-700 Make it public
+                  small.text-gray-400.font-light Publish and share the link to anyone.
+              = f.fields_for :configuration do |ff|
+                = render ToggleComponent.new(f: ff, field: :mode, checked_value: :public, unchecked_value: :private, onchange: "this.form.requestSubmit();", data: { action: "change->privacy#toggleMode" }, checked: list.configuration.mode == "public")
+            .mt-2 data-privacy-target="public"
+              .flex.items-center.w-full.my-4 data-controller="clipboard"
+                input type="text" value="#{ request.url }" class="w-full p-1 rounded-l border-2 border-gray-300" data-clipboard-target="source"
+                = link_to "Copy", '', { class: "flex py-1 px-3 border-2 rounded-r border-gray-300 border-l-0", data: { action: "clipboard#copy" }  }
+              .flex.flex-col
+                - List::PermissionsBitmap::PERMISSIONS.each do |name, value|
+                  label.flex.justify-between.cursor-pointer.mb-2 for="permission-#{ value }"
+                    span.text-sm Allow #{ name }
+                    = render CheckboxComponent.new(f: f, field: :anon_permissions, checked_value: value, unchecked_value: nil, multiple: true, checked: list.anon_permissions[name], id: "permission-#{ value }", data: { "privacy-target": :rule, action: "change->privacy#toggle" } )
+      .flex.flex-col data-privacy-target="private"
+        = turbo_frame_tag "#{ dom_id(list) }_invitations" do
+          = render partial: 'lists/invitations/invitation', collection: list.invitations, as: :invitation, locals: { list: list }
+        = form_for list.invitations.new, url: list_invitations_path(list), html: { data: { action: "submit->invitations#create" } } do |f|
+          .flex.flex-row.my-3
+            = f.text_field :name, class: "w-full p-1 rounded border-2 border-gray-300 mr-2", placeholder: "Name"
+            = f.text_field :email, required: true, class: "w-full p-1 rounded border-2 border-gray-300 mr-2", placeholder: "Email"
+            = f.submit "Invite", class: "p-2 rounded bg-blue-400 hover:bg-blue-500 cursor-pointer font-semibold text-white"
+      .bg-gray-50.px-4.py-3.sm:px-6.sm:flex.sm:flex-row-reverse
+        button.mt-3.w-full.inline-flex.justify-center.rounded-md.border.border-gray-300.shadow-sm.px-4.py-2.bg-white.text-base.font-medium.text-gray-700.hover:bg-gray-50.focus:outline-none.focus:ring-2.focus:ring-offset-2.focus:ring-indigo-500.sm:mt-0.sm:ml-3.sm:w-auto.sm:text-sm type="button" data-action="click->modals#close"
+          | Cancel

@@ -56,7 +56,8 @@ class List < ApplicationRecord
   # Associations
   belongs_to :user
 
-  has_many :items, class_name: 'Lists::Item'
+  has_many :items
+  has_many :invitations
 
   # Validations
   validates :name, presence: true

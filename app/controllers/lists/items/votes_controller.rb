@@ -23,7 +23,7 @@ module Lists
       end
 
       def vote_params
-        params.require(:lists_items_vote).permit(:sign)
+        params.require(:list_item_vote).permit(:sign)
       end
     end
   end

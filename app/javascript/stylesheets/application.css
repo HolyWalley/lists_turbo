@@ -4,3 +4,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+[data-modals-shown-value="false"] > .modal {
+    display: none;
+}
